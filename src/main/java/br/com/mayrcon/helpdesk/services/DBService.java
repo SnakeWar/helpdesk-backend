@@ -9,19 +9,20 @@ import br.com.mayrcon.helpdesk.domain.enums.Status;
 import br.com.mayrcon.helpdesk.repositories.ChamadoRepository;
 import br.com.mayrcon.helpdesk.repositories.ClienteRepository;
 import br.com.mayrcon.helpdesk.repositories.TecnicoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
 @Service
+@AllArgsConstructor
 public class DBService {
-    @Autowired
-    private TecnicoRepository tecnicoRepository;
-    @Autowired
-    private ClienteRepository clienteRepository;
-    @Autowired
-    private ChamadoRepository chamadoRepository;
+
+    final private TecnicoRepository tecnicoRepository;
+
+    final private ClienteRepository clienteRepository;
+
+    final private ChamadoRepository chamadoRepository;
 
     public void instanciaDB() {
 //        Tecnico tec1 = new Tecnico(null, "Micael Gustavo", "514.824.060-12", "micael@email.com", "123");
