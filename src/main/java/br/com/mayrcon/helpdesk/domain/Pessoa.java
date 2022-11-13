@@ -2,6 +2,7 @@ package br.com.mayrcon.helpdesk.domain;
 
 import br.com.mayrcon.helpdesk.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +20,7 @@ public abstract class Pessoa implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
-
+    @CPF
     @Column(unique = true)
     protected String cpf;
     @Column(unique = true)
@@ -89,7 +90,7 @@ public abstract class Pessoa implements Serializable {
     }
 
     public Set<Perfil> getPerfis() {
-        return perfis.stream().map(x -> Perfil.toEnum(x))
+        return perfis.stream().map(Perfil::toEnum)
                 .collect(Collectors.toSet());
     }
 

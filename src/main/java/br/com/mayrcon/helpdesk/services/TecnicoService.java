@@ -10,6 +10,7 @@ import br.com.mayrcon.helpdesk.services.exceptions.ObjectnotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +36,22 @@ public class TecnicoService {
         validaPorCpfEEmail(objDTO);
         Tecnico newObj = new Tecnico(objDTO);
         return tecnicoRepository.save(newObj);
+    }
+
+    public Tecnico update(Integer id, @Valid TecnicoDTO tecnicoDTO) {
+        tecnicoDTO.setId(id);
+        Tecnico tecnico = findById(id);
+        validaPorCpfEEmail(tecnicoDTO);
+        tecnico = new Tecnico(tecnicoDTO);
+        return tecnicoRepository.save(tecnico);
+    }
+
+    public void delete(Integer id) {
+        Tecnico tecnico = findById(id);
+        if(tecnico.getChamados().size() > 0) {
+            throw new DataIntegrationViolationException("Técnico possui ordens de serviço e não pode ser deletado!");
+        }
+        tecnicoRepository.deleteById(id);
     }
 
     private void validaPorCpfEEmail(TecnicoDTO objDTO) {
