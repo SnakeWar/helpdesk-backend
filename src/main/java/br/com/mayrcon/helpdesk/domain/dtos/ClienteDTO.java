@@ -1,6 +1,6 @@
 package br.com.mayrcon.helpdesk.domain.dtos;
 
-import br.com.mayrcon.helpdesk.domain.Tecnico;
+import br.com.mayrcon.helpdesk.domain.Cliente;
 import br.com.mayrcon.helpdesk.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TecnicoDTO implements Serializable {
+public class ClienteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     protected Integer id;
@@ -28,12 +28,12 @@ public class TecnicoDTO implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate dataCriacao = LocalDate.now();
 
-    public TecnicoDTO() {
+    public ClienteDTO() {
         super();
-        addPerfil(Perfil.TECNICO);
+        addPerfil(Perfil.CLIENTE);
     }
 
-    public TecnicoDTO(Tecnico obj) {
+    public ClienteDTO(Cliente obj) {
         super();
         this.id = obj.getId();
         this.nome = obj.getNome();
@@ -45,7 +45,7 @@ public class TecnicoDTO implements Serializable {
                 .map(Perfil::getCodigo)
                 .collect(Collectors.toSet());
         this.dataCriacao = obj.getDataCriacao();
-        addPerfil(Perfil.TECNICO);
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Integer getId() {
