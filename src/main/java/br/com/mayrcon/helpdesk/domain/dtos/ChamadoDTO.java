@@ -1,0 +1,55 @@
+package br.com.mayrcon.helpdesk.domain.dtos;
+
+import br.com.mayrcon.helpdesk.domain.Chamado;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.io.Serializable;
+import java.time.LocalDate;
+
+@Data
+public class ChamadoDTO implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataAbertura = LocalDate.now();
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataFechamento;
+
+
+    private Integer prioridade;
+    private Integer status;
+    private String titulo;
+    private String observacoes;
+
+    private Integer tecnico;
+    private String nomeTecnico;
+
+    private Integer cliente;
+    private String nomeCliente;
+
+    public ChamadoDTO() {
+        super();
+    }
+
+    public ChamadoDTO(Chamado chamado) {
+        super();
+        this.id = chamado.getId();
+        this.prioridade = chamado.getPrioridade().getCodigo();
+        this.status = chamado.getStatus().getCodigo();
+        this.titulo = chamado.getTitulo();
+        this.observacoes = chamado.getObservacoes();
+        this.tecnico = chamado.getTecnico().getId();
+        this.nomeTecnico = chamado.getTecnico().getNome();
+        this.cliente = chamado.getCliente().getId();
+        this.nomeCliente = chamado.getCliente().getNome();
+    }
+}

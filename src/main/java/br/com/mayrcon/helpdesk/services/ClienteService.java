@@ -1,13 +1,13 @@
 package br.com.mayrcon.helpdesk.services;
 
-import br.com.mayrcon.helpdesk.domain.Pessoa;
 import br.com.mayrcon.helpdesk.domain.Cliente;
+import br.com.mayrcon.helpdesk.domain.Pessoa;
 import br.com.mayrcon.helpdesk.domain.dtos.ClienteDTO;
-import br.com.mayrcon.helpdesk.repositories.PessoaRepository;
 import br.com.mayrcon.helpdesk.repositories.ClienteRepository;
+import br.com.mayrcon.helpdesk.repositories.PessoaRepository;
 import br.com.mayrcon.helpdesk.services.exceptions.DataIntegrationViolationException;
 import br.com.mayrcon.helpdesk.services.exceptions.ObjectnotFoundException;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
