@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,13 @@ public class ChamadoService {
         return chamadoRepository.save(newChamado(chamadoDTO));
     }
 
+    public Chamado update(Integer id, @Valid ChamadoDTO chamadoDTO) {
+        chamadoDTO.setId(id);
+        Chamado chamado = findById(id);
+        chamado = newChamado(chamadoDTO);
+        return chamadoRepository.save(chamado);
+    }
+
     private Chamado newChamado(ChamadoDTO chamadoDTO) {
         Tecnico tecnico = tecnicoService.findById(chamadoDTO.getTecnico());
         Cliente cliente = clienteService.findById(chamadoDTO.getCliente());
@@ -50,6 +58,11 @@ public class ChamadoService {
         if (chamadoDTO.getId() != null) {
             chamado.setId(chamadoDTO.getId());
         }
+
+        if (chamadoDTO.getStatus().equals(2) && chamadoDTO.getDataFechamento() == null) {
+            chamado.setDataFechamento(LocalDate.now());
+        }
+
         chamado.setCliente(cliente);
         chamado.setTecnico(tecnico);
         chamado.setObservacoes(chamadoDTO.getObservacoes());

@@ -2,7 +2,8 @@ package br.com.mayrcon.helpdesk.domain.dtos;
 
 import br.com.mayrcon.helpdesk.domain.Chamado;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 public class ChamadoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -39,11 +39,11 @@ public class TecnicoResource {
     }
 
     @PostMapping
-    public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoDTO objDTO) {
-        Tecnico te = tecnicoService.create(objDTO);
+    public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoDTO tecnicoDTO) {
+        Tecnico tecnico = tecnicoService.create(tecnicoDTO);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newObj.getId())
+                .buildAndExpand(tecnico.getId())
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
