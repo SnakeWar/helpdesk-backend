@@ -8,6 +8,7 @@ import br.com.mayrcon.helpdesk.repositories.TecnicoRepository;
 import br.com.mayrcon.helpdesk.services.exceptions.DataIntegrationViolationException;
 import br.com.mayrcon.helpdesk.services.exceptions.ObjectnotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -22,6 +23,8 @@ public class TecnicoService {
 
     private final PessoaRepository pessoaRepository;
 
+    private final BCryptPasswordEncoder encoder;
+
     public Tecnico findById(Integer id) {
         Optional<Tecnico> obj = tecnicoRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectnotFoundException("Técnico não encontrado! Id: " + id));
@@ -31,10 +34,11 @@ public class TecnicoService {
         return tecnicoRepository.findAll();
     }
 
-    public Tecnico create(TecnicoDTO objDTO) {
-        objDTO.setId(null);
-        validaPorCpfEEmail(objDTO);
-        Tecnico newObj = new Tecnico(objDTO);
+    public Tecnico create(TecnicoDTO tecnicoDTO) {
+        tecnicoDTO.setId(null);
+        tecnicoDTO.setSenha(encoder.encode(tecnicoDTO.getSenha()));
+        validaPorCpfEEmail(tecnicoDTO);
+        Tecnico newObj = new Tecnico(tecnicoDTO);
         return tecnicoRepository.save(newObj);
     }
 

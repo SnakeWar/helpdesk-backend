@@ -8,6 +8,7 @@ import br.com.mayrcon.helpdesk.repositories.PessoaRepository;
 import br.com.mayrcon.helpdesk.services.exceptions.DataIntegrationViolationException;
 import br.com.mayrcon.helpdesk.services.exceptions.ObjectnotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -22,6 +23,8 @@ public class ClienteService {
 
     private final PessoaRepository pessoaRepository;
 
+    private final BCryptPasswordEncoder encoder;
+
     public Cliente findById(Integer id) {
         return clienteRepository
                 .findById(id)
@@ -32,10 +35,11 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente create(ClienteDTO objDTO) {
-        objDTO.setId(null);
-        validaPorCpfEEmail(objDTO);
-        Cliente newObj = new Cliente(objDTO);
+    public Cliente create(ClienteDTO clienteDTO) {
+        clienteDTO.setId(null);
+        clienteDTO.setSenha(encoder.encode(clienteDTO.getSenha()));
+        validaPorCpfEEmail(clienteDTO);
+        Cliente newObj = new Cliente(clienteDTO);
         return clienteRepository.save(newObj);
     }
 
